@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Hasta mañana, cumpleañera</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&display=swap">
+<style>
+:root{--night:#03040f;--star:#fff4d9;--glow:#7fa8ff;--ink:#eaf0ff;--mute:#8f9cc9;
+  color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{height:100%;margin:0;overflow:hidden;color:var(--ink);font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  background:var(--night) radial-gradient(110% 60% at 85% 0%,#14235f,transparent 60%),radial-gradient(90% 60% at 8% 100%,#1d1348,transparent 65%);transition:background 3s}
+body.fin{background:var(--night) radial-gradient(70% 50% at 50% 38%,#16276b,transparent 70%)}
+#bg{position:fixed;inset:0;width:100%;height:100%;transition:opacity 3s}
+body.fin #bg{opacity:.28}
+.moon{position:fixed;top:calc(env(safe-area-inset-top,0px) + 16px);right:20px;width:56px;height:56px;border-radius:50%;box-shadow:inset -17px 5px 0 0 #f6f1de;filter:drop-shadow(0 0 14px rgba(200,220,255,.55));transform:rotate(-20deg);transition:all 4s cubic-bezier(.3,.7,.2,1);z-index:3}
+body.fin .moon{top:30%;right:50%;transform:translate(50%,-50%) rotate(-20deg) scale(2.6);filter:drop-shadow(0 0 46px rgba(200,220,255,.95))}
+body.fin.beat .moon{animation:beat 3.2s ease-in-out infinite}
+@keyframes beat{50%{filter:drop-shadow(0 0 70px rgba(220,232,255,1))}}
+main{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;max-width:560px;margin:0 auto;padding:22px 18px 18px}
+.clk{align-self:flex-start;margin:0;font-size:1.5rem;font-style:italic;color:var(--mute);transition:color 1s,opacity 2s}
+.clk.late{color:#ffd9dd}
+body.fin .clk{opacity:0}
+.wrap{flex:1;display:grid;place-items:center;width:100%;min-height:0;transition:opacity 1.5s}
+body.fin .wrap{opacity:0;pointer-events:none}
+.stage{position:relative;width:min(84vw,46vh);aspect-ratio:1.1}
+.st{position:absolute;width:40px;height:40px;transform:translate(-50%,-50%);display:grid;place-items:center;transition:opacity 1.3s ease,transform 1.3s ease}
+.st::before,.st::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.st::before{width:1.5px;height:34px;background:linear-gradient(transparent,var(--star),transparent)}
+.st::after{width:34px;height:1.5px;background:linear-gradient(90deg,transparent,var(--star),transparent)}
+.st i{width:9px;height:9px;border-radius:50%;background:var(--star);box-shadow:0 0 14px 4px rgba(255,244,217,.8);animation:tw 3s ease-in-out infinite;animation-delay:calc(var(--k)*-.37s)}
+@keyframes tw{50%{opacity:.55;transform:scale(.8)}}
+.st.fl{transform:translate(-50%,-50%) scale(1.9);filter:brightness(1.6)}
+.st.off{opacity:0;transform:translate(-50%,-50%) scale(.15)}
+.ln{min-height:2.8em;margin:0 0 16px;text-align:center;font-style:italic;font-size:clamp(1.5rem,6.5vw,2rem);line-height:1.2;transition:opacity 1s}
+#note{position:fixed;left:0;right:0;top:50%;z-index:2;padding:0 26px;text-align:center}
+#note p{margin:0 0 12px;font-style:italic;font-size:clamp(1.35rem,6vw,1.8rem);line-height:1.25;opacity:0;transform:translateY(8px);transition:opacity 1.6s,transform 1.6s}
+#note p.on{opacity:1;transform:none}
+#note p.big{font-weight:600;font-size:clamp(1.7rem,7.5vw,2.3rem);color:var(--star)}
+.start{position:fixed;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:30px;background:rgba(3,4,15,.88);transition:opacity 1.2s}
+.start.gone{opacity:0;pointer-events:none}
+.start .t{margin:0;font-size:clamp(3.4rem,17vw,5rem);font-style:italic;line-height:1;color:var(--star);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.6}}
+.start p{margin:0;font-size:1.45rem;font-style:italic;color:var(--mute)}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;margin-top:10px;padding:14px 30px;border-radius:99px;font-style:italic;font-weight:600;font-size:1.3rem;color:#fff;background:linear-gradient(135deg,#3f78ff,#7a8bff);box-shadow:0 8px 28px rgba(63,120,255,.5)}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#again{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);transform:translateX(-50%);z-index:4;opacity:0;pointer-events:none;transition:opacity 2s;padding:10px 20px;font-size:1.05rem;background:none;border:1px solid rgba(127,168,255,.4);box-shadow:none;color:var(--mute);margin:0}
+#again.on{opacity:1;pointer-events:auto}
+#open{position:fixed;left:50%;top:62%;transform:translateX(-50%);z-index:4;opacity:0;pointer-events:none;transition:opacity 2.5s;margin:0}
+#open.on{opacity:1;pointer-events:auto}
+#letter{position:fixed;inset:0;z-index:8;overflow-y:auto;background:rgba(3,4,15,.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:calc(env(safe-area-inset-top,0px) + 64px) 24px calc(env(safe-area-inset-bottom,0px) + 70px);animation:rise 1s ease both}
+#letter[hidden]{display:none}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}}
+.pap{max-width:560px;margin:0 auto;font-style:italic;font-size:clamp(1.25rem,5vw,1.5rem);line-height:1.5;color:var(--ink)}
+.pap p{margin:0 0 1.2em}
+.pap .end{text-align:center;color:var(--star);font-weight:600;font-size:1.2em}
+.pap .fin{text-align:center;color:var(--mute);font-size:1rem}
+.xx{all:unset;position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;z-index:9;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;font-size:1.9rem;color:var(--ink);background:rgba(3,4,15,.7);cursor:pointer}
+.xx:focus-visible{outline:2px solid var(--glow)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="moon" aria-hidden="true"></div>
+<main>
+  <p class="clk" id="clk">11:50 pm</p>
+  <div class="wrap"><div class="stage" id="stage"></div></div>
+  <p class="ln" id="ln" aria-live="polite"></p>
+</main>
+<button class="btn" id="again">volver a ver</button>
+<button class="btn" id="open">Abrir tu carta</button>
+<section id="letter" hidden aria-label="Tu carta">
+<button class="xx" id="close" aria-label="Cerrar la carta">×</button>
+<article class="pap">
+<p>Holi mi preciosa, inicio esta carta el 16 de octubre del 2026, esperando que se compilen todos los códigos, a decir verdad, nunca pero nunca pensé que amaría tanto lo sé que sé hacer, hasta ahora. Estoy haciéndole una cartita a mi preciosa para que se sienta querida en su día aún en la distancia. posiblemente si recibes esta carta, es porque ya viste los otros programas. Y conociéndote, me agradecerás de 70mil formas, pero cariño, si hago esto no es para que me quieras, es para que te sientas al menos un 99% querida de lo que realmente te quiero, porque se me hace tan fácil hacerlo, pero tan difícil explicarlo, que es una contradicción constante.</p>
+<p>Pero antes de que se acabe el 25, el universo (yo), quiere que sepas que hoy fue tu día y que lo mereces todo.</p>
+<p>Absolutamente todo, mi beibisyta. Todas las cosas bonitas que existen, todas las alegrías que todavía no conoces, todos los abrazos que aún te faltan por recibir ( los míos obvioooooo) y todos esos momentos que algún día recordarás con una sonrisa enorme, agradeciendo haberlos vivido. Porque sí, mi cariño, tú mereces una vida llena de momentos que te hagan sentir que vale la pena estar aquí, de personas que te cuiden con ternura y de días tan bonitos que desees guardarlos para siempre en algún rinconcito de tu corazón.</p>
+<p>Ojalá hoy hayas sido muy feliz, mi niña. Ojalá hayas sonreído muchísimo, que hayas recibido abrazos bonitos, que te hayan dicho cosas que te hicieran sentir especial y que, aunque fuera por unos segunditos, hayas podido verte con los mismos ojos con los que te veo yo. Ojalá hoy hayas sentido cuánto vales, cuánto mereces y cuánta felicidad puede traer al mundo una personita como tú.</p>
+<p>Y si algo te hizo sonreír, aunque fuera poquito, mi niñita hermosa, entonces el día valió la pena. Si hubo un momento en el que te sentiste querida, si alguna cosita consiguió alegrarte el corazón o si por un instante te olvidaste de todo lo que pudiera preocuparte, espero que sepas que eso también cuenta. No todos los días tienen que ser perfectos para ser especiales, mi blanquita vainilla. A veces basta con las cosas más sencillas, pero que tocan el corazón, mi blanquita vainilla.</p>
+<p>Y eso era lo que yo quería para ti, mi preciosa. No necesitaba que este cumpleaños fuera el más perfecto del mundo; solo quería que tuviera algo que te hiciera sonreír, algo que pudieras mirar y sentir tuyo, algo que te recordara que hay personitas que se alegran muchísimo de que existas. Quería que tu cumpleaños tuviera pedacitos de ti, de las cosas que te gustan, de tu música (obvio mencionaré la música en todo, porque aparte de es lo que más te gusta, en parte fue lo que nos unió), de tu esencia y de esa manera tan tuya de ser que hace que me resulte tan bonito conocerte.</p>
+<p>Porque, ay, mi marshmellow, si supieras cuántas veces he pensado en cómo hacerte feliz, cuántas veces he imaginado tu reacción al ver cada detallito y cuántas ganas tenía de que llegara este día para celebrarte. He dedicado tiempo a estas cositas porque quería regalarte algo que no fuera cualquier cosa, a pesar de saber que no te gustan esas cosas, pero es que, ¿Cómo me quedo quieta teniendo tanto que darte?. Quería regalarte un recuerdo. Uno que pudieras volver a visitar cuando quisieras, incluso cuando el cumpleaños ya hubiera terminado, incluso cuando las estrellas de esta pantalla se hubieran apagado (que espero que funcionen, amén) y el calendario dijera que el 25 quedó atrás.</p>
+<p>Y ahora míranos, mi amorcito. El día está llegando a su final.</p>
+<p>Las horas han pasado, el reloj sigue avanzando y dentro de poquito el 25 será solamente una fecha que quedó en el pasado. Ya no será hoy, mi niña. Ya no será el día de tus diecinueve años (que vieja cariño). Y aunque me dé una ternura enorme pensar que este día tan especial está terminando, quiero que recuerdes algo antes de despedirlo: que se acabe tu cumpleaños no significa que se acabe la magia de haber nacido.</p>
+<p>Porque mañana seguirás siendo tú, mi Lely. Seguirás siendo miiiii preciosotaaaa, mi hermosisísima, mi blanquita vainilla, mi niñita hermosa. Seguirás teniendo tus gustos, tus ocurrencias, tus pequeñas manías y todas esas cositas que te hacen ser exactamente quien eres. El calendario cambiará, pero nada de lo bonito que hay en ti va a desaparecer porque hayan pasado las doce.</p>
+<p>Tu cumpleaños termina, mi niña, pero tú sigues siendo un motivo para celebrar.</p>
+<p>Y qué bonito es poder decir eso de ti, mi cariño. Qué bonito que existas en este mundo, que tengas tu propia historia, tus sueños, tus pensamientos, tus gustos y tantas cosas que todavía quiero descubrir de ti. Qué bonito que, entre tantas personas, tantos lugares y tantas coincidencias posibles, yo haya tenido la oportunidad de coincidir contigo.</p>
+<p>A veces me pongo a pensar en eso, mi amor, y me parece increíble que una persona pueda convertirse poquito a poquito en alguien tan especial para otra. Cómo algo tan sencillo como una conversación puede quedarse dando vueltas en la cabeza durante horas. Cómo una canción puede empezar a recordarte a alguien. Cómo puedes estar haciendo cualquier cosa y, de repente, pensar en una personita y sonreír sin siquiera darte cuenta.</p>
+<p>Y tú haces eso conmigo, mi beibisyta.</p>
+<p>A veces una canción (o casi todas) me recuerda a ti. A veces pienso en algo que te gustaría y me entran ganas de enseñártelo. A veces recuerdo alguna cosita que dijiste y vuelvo a sonreír. Y otras veces simplemente me acuerdo de ti, de mi Lelysita, y me da una felicidad tan bonita que no sé cómo explicarla sin sentir que las palabras se me quedan pequeñas (que aficie tengo, omg cariño, ¿Que me hiciste?, porque mi preciosa, es que ni necesito tocarte y mucho menos verte todos los días para saber que te quiero y que tú te ganaste mi cariño de la forma más tierna posible).</p>
+<p>Porque no se trata solamente de las cosas grandes, mi conejita tierna. También se trata de esos detalles que probablemente parecen insignificantes para el resto del mundo, pero que para mí tienen un lugar especial porque me recuerdan a ti. Se trata de ir descubriendo quién eres, de conocer tus gustos, de escuchar las cosas que te emocionan y de encontrar nuevas razones para pensar que qué suerte la mía haber llegado a conocerte.</p>
+<p>Y todavía me quedan tantas cosas por descubrir de ti, preciosa. Tantas conversaciones que quiero tener contigo, tantas canciones que quiero escuchar pensando en ti, tantas risas que todavía no hemos compartido y tantos momentos sencillos que me gustaría vivir a tu lado. No sé cómo serán todos esos días que todavía no conocemos, mi amorcito, pero me hace feliz pensar que aún hay tantas cosas bonitas que pueden suceder.</p>
+<p>No necesito que todos nuestros momentos sean extraordinarios. A veces me parece suficiente imaginar una tarde tranquila, dormir juntitas como siempre hemos anhelado, una conversación que se alarga sin que nos demos cuenta, una canción sonando de fondo o una risa que aparece por cualquier tontería. Esas cositas que quizá no parecen importantes cuando suceden, pero que después se convierten en recuerdos a los que una vuelve porque le hacen bien al corazón.</p>
+<p>Y yo espero que la vida te regale muchísimos momentos así, mi niña. Que tengas días tranquilos en los que no tengas que preocuparte por nada, que encuentres canciones que parezcan escritas para ti, que conozcas lugares que te dejen sin palabras y que puedas reírte tanto que te duela la barriga. Que tengas razones para emocionarte, cosas nuevas que aprender, sueños que perseguir y personas (no muchas personas femeninas tampoco) con las que puedas ser tú sin miedo a que eso sea demasiado.</p>
+<p>Porque tú mereces eso y muchísimo más, mi blanquita vainilla.<br>Y quiero que te acuerdes de algo, mi marshmellowwwwww de mi corazón: no tienes que hacer nada extraordinario para merecer cosas bonitas. No tienes que estar feliz todo el tiempo, ni ser fuerte cada segundo, ni tener todas las respuestas, ni fingir que nada te duele cuando estás pasando por un momento difícil. Mucho menos tener que pasar por todo tú sola mi amor.</p>
+<p>Puedes cansarte, mi niña. Puedes tener días malos, puedes llorar, puedes sentirte perdida y puedes necesitar que alguien te recuerde que todo estará bien, aunque todavía no sepas cómo. Nada de eso te hace menos especial. Nada de eso te quita valor. Nada de eso cambia el hecho de que mereces cariño, paciencia, comprensión y ternura incluso cuando no estás en tu mejor momento.</p>
+<p>Ojalá nunca sientas que tienes que ganarte el derecho a que te traten bonito, mi preciosa. Ojalá nunca creas que debes ser perfecta para merecer que te cuiden. Y ojalá, cuando la vida se ponga difícil, encuentres motivos para seguir adelante y personas que te recuerden que no tienes que poder con todo tú solita, y que placer sería que sea yo quien te recuerde eso.</p>
+<p>Mi niña hermosa, mereces que te escuchen cuando quieras hablar y que respeten tu silencio cuando no tengas ganas de hacerlo. Mereces abrazos (solo míos, please) que te den tranquilidad, palabras que te hagan sentir comprendida y personas que no te hagan dudar constantemente de si eres suficiente. Mereces que te celebren cuando consigues algo que te costó mucho, que se alegren por tus pequeñas victorias y que te acompañen también en esos días en los que lo único que necesitas es descansar, y aquí siempre me tendrás mi amor, porque te admiro muchísimo, eres la mejor, la cabraaaaaaa.</p>
+<p>Y si alguna vez llega uno de esos días en los que no consigues ver todas las cosas bonitas que hay en ti, mi amorcito, ojalá recuerdes que no tienes que sentirte maravillosa todos los días para ser una persona maravillosa.</p>
+<p>Si algún día dudas de ti, recuerda que todavía te quedan muchísimas cosas por vivir. Si algún día sientes que no avanzas, recuerda cuánto puedes crecer sin darte cuenta. Si algún día tienes miedo del futuro, recuerda que no necesitas resolver toda tu vida en una sola noche.</p>
+<p>Tienes diecinueve años, mi Lelysita. Diecinueve años de historias, de aprendizajes, de momentos que maybe te hicieron reír, de otros que quizás te hicieron llorar y de muchísimas cosas que te han convertido en la personita que eres hoy.</p>
+<p>Y todavía te queda tanto, mi niña. TANTO.<br>Todavía hay lugares que todavía no conoces y que algún día te harán sentir pequeñita de lo hermosos que son. Hay sueños que ni siquiera has imaginado todavía, y recuerdos que todavía no existen, pero que algún día podrían convertirse en algunos de tus favoritos.</p>
+<p>Ojalá te permitas vivirlos todos con ilusión, mi preciosa. Ojalá nunca dejes de emocionarte por las cosas pequeñas, de descubrir nuevos gustos, de aprender algo que te apasione o de cambiar de opinión cuando la vida te enseñe algo diferente. Ojalá tengas la oportunidad de convertirte en todas las versiones de ti que todavía te esperan.</p>
+<p>Y cuando mires hacia atrás, mi beibisyta, espero que puedas sentir ternura por todas las versiones de ti que te trajeron hasta aquí. Por la niña que fuiste, por la adolescente que has sido y por la mujer en la que poco a poco te irás convirtiendo. Espero que puedas mirar tus errores sin castigarte eternamente por ellos, reconocer tus esfuerzos y sentirte orgullosa de todo lo que has superado.</p>
+<p>Porque no tienes que tener la vida resuelta a los diecinueve, mi amor. No tienes que saber exactamente quién serás, dónde estarás o qué cosas te esperan. Puedes ir descubriéndolo a tu ritmo, equivocarte, volver a intentarlo y cambiar de camino si un día descubres que deseas algo diferente.</p>
+<p>Lo único que deseo es que no te olvides de ti mientras construyes la vida que sueñas.<br>Que te cuides, mi conejita tierna. Que te hables bonito. Que descanses cuando lo necesites. Que no minimices tus sentimientos ni te avergüences de las cosas que te hacen feliz. Que nunca permitas que un momento difícil te convenza de que tu historia no tiene cosas bonitas por delante.</p>
+<p>Y, sobre todo, mi niña, que tengas una vida que se sienta tuya. Una vida en la que puedas reír sin contenerte, llorar sin avergonzarte, soñar sin pensar que pides demasiado y celebrar cada pequeño paso que te acerque a la persona que quieres ser.</p>
+<p>Eso es lo que deseo para tus diecinueve años, mi cariño. No solamente que cumplas sueños, sino que disfrutes el camino hacia ellos. No solamente que seas feliz en los días importantes, sino que también encuentres felicidad en los días ordinarios. No solamente que recibas regalos en tu cumpleaños, sino que la vida te sorprenda con pequeñas cosas bonitas cuando menos te lo esperes mi amor.</p>
+<p>Y ojalá hoy haya sido uno de esos días, mi amorcito.<br>Ojalá este cumpleaños te deje un recuerdo bonito. Ojalá, cuando pienses en él dentro de unos meses, recuerdes alguna de las canciones que me hicieron pensar en ti mientras hacía esto, alguna palabra, alguna sonrisa o alguno de estos pequeños detalles y vuelvas a sentir un poquito de la felicidad de hoy.</p>
+<p>Porque yo quería que tuvieras algo que fuera más allá de la fecha, mi preciosa. Quería que pudieras volver a este pequeño rincón y encontrar palabras que te recordaran lo especial que eres. Quería que supieras que hubo alguien pensando en ti, imaginando cómo hacerte sonreír y dedicándote tiempo porque le hacía ilusión celebrar que existes.</p>
+<p>Y esa personita soy yo, mi Lely.<br>Yo, que quise llenar tu cumpleaños de detallitos. Yo, que preparé estas pequeñas cosas imaginando tu carita al descubrirlas. Yo, que quería que tuvieras un recuerdo diferente y que, incluso después de que terminara el día, pudieras volver a él cuando quisieras. Yo, que a pesar de estar tan leeeejossss, quería que te sientas querida, que sientas mi cariño.</p>
+<p>Quizás algún día no recuerdes cada detalle de este cumpleaños, mi marshmellow, porque a decir verdad, eres like una Dory humana. Quizás olvides qué apareció primero en la pantalla, cuántas estrellas había o exactamente qué decía cada frase. Pero ojalá recuerdes cómo te hizo sentir. Ojalá recuerdes que alguien quiso dedicarte algo hecho especialmente para ti, que pensó en tus gustos y que deseaba de corazón que te sintieras querida.</p>
+<p>Y si algún día vuelves a leer esta carta, quiero que te detengas un momentito en estas palabras, mi blanquita vainilla. No importa cuántos años hayan pasado. No importa si para entonces tienes veinte, veintiuno, treinta o muchísimos más. O solo han pasado meses, quizás días. Quiero que recuerdes a la Lesly que cumplió diecinueve años y que merece exactamente la misma ternura que merece la Lesly que estará leyendo estas palabras en el futuro.</p>
+<p>Porque crecer no significa dejar de necesitar cariño. Cumplir años no significa que tengas que convertirte de repente en alguien que lo sabe todo. Y hacerte mayor nunca debería significar que dejes de permitirte ser feliz con las cosas pequeñas.</p>
+<p>Así que sigue emocionándote por todo, riéndote de las tonterías que te hacen gracia. Sigue encontrando cosas nuevas que te gusten y permitiéndote descubrir quién eres. Sigue siendo tú, mi preciosa, incluso cuando estés cambiando, incluso cuando estés aprendiendo y hasta cuando no sepas muy bien qué estás haciendo.</p>
+<p>No tienes que convertirte en otra persona para merecer una vida bonita.<br>Ya eres tú, mi amorcito. Y eso es suficiente para empezar.<br>Y ahora quiero hablarte de algo que quizás no te he dicho de esta manera, mi Lelysita.</p>
+<p>Graaaaaaciiiiiiiaaaaaasssss.</p>
+<p>Gracias por existir. Gracias por ser tú. Gracias por cada conversación, por cada sonrisa que me has sacado y por esas pequeñas cositas tuyas que han conseguido quedarse guardadas en mi memoria. Gracias por quererme de la manera en la que me quieres. Gracias por dejarme conocerte poquito a poquito y por darme la oportunidad de descubrir a la persona que hay detrás de tu nombre.</p>
+<p>Gracias por convertirte en una personita que me hace feliz la vida mía.</p>
+<p>A veces hay cosas que una siente y que no sabe explicar del todo. No porque no sean importantes, sino precisamente porque significan tanto que cualquier explicación parece quedarse corta. Y creo que eso me pasa un poquito cuando intento poner en palabras lo especial que se ha vuelto para mí coincidir contigo, mi amor.</p>
+<p>Porque ¿Cómo se explica que alguien pueda alegrarte el día sin siquiera proponérselo? ¿Cómo se explica esa felicidad pequeñita que aparece cuando tienes ganas de contarle algo a alguien porque sabes que quieres compartirlo con ella?</p>
+<p>No sé explicarlo perfectamente, mi amor. Pero sé que me gusta. Me gusta descubrir estas pequeñas cosas, me gusta tener recuerdos que me hagan sonreír y me gusta saber que todavía hay tanto de ti que quiero conocer.</p>
+<p>Y si algo deseo para este nuevo año de tu vida, mi niña hermosa, es que nunca te falten motivos para vivir de esa manera que te hace tan bonita. Que nunca te falten canciones que te acompañen, sueños que te emocionen, abrazos que te reconforten y momentos que te hagan pensar: “Qué bonito es estar aquí”.</p>
+<p>Felices diecinueve, mi amorcito.<br>Felices diecinueve a todas las cosas que has vivido, a todas las que has aprendido y a todas las que todavía te esperan. Felices diecinueve a tus sueños, a tus canciones, a tus ilusiones y a esa personita tan bonita que sigue creciendo, aprendiendo y descubriendo el mundo.</p>
+<p>Feliz vida, mi Lely.<br>Feliz vida, mi Lelysita.<br>Feliz vida, mi niñita hermosa.</p>
+<p>Y ahora, mi niña, mira la luna un momentito.</p>
+<p>Mira todas esas estrellas que estuvieron brillando para ti. Cada una acompañó un pedacito de esta despedida, como si el cielo quisiera recordarte que hoy hubo algo que merecía ser celebrado. Pero incluso cuando la última se apague, incluso cuando la pantalla se quede solamente con la luna, quiero que recuerdes que no necesitas estrellas encendidas para seguir siendo luz.</p>
+<p>Porque la luz más importante de esta historia eres tú, mi preciosa.<br>Tú eres la razón de esta pequeña despedida, mi amorcito. La razón por la que quise que el día terminara con algo que pudieras guardar en el corazón.</p>
+<p>Y ojalá, si alguna vez la vida te hace olvidar lo mucho que mereces ser feliz, vuelvas aquí. Que leas estas palabras despacito y recuerdes que, cuando cumpliste diecinueve años, alguien quiso recordarte que tu existencia era motivo suficiente para celebrar.</p>
+<p>No por lo que haces.<br>No por lo que tienes.<br>No por lo que puedas llegar a ser.</p>
+<p>Simplemente porque eres tú.<br>Porque existes.</p>
+<p>Porque tu vida tiene valor incluso en los días en los que tú misma no consigues verlo.<br>Porque mereces cosas bonitas hoy, mañana y todos los días que vengan después.</p>
+<p>Y porque, entre todas las cosas que podría desearte esta noche, mi niña, creo que lo más importante es que nunca te falte la oportunidad de descubrir lo bonito que puede ser vivir.</p>
+<p>El reloj está llegando a las doce, mi beibisyta. El 25 está a punto de terminar y esta pequeña celebración también tiene que despedirse.</p>
+<p>Pero antes de que se vaya el día, quiero dejarte un último deseo.</p>
+<p>Ojalá que Dios te cuide cuando yo no pueda hacerlo. Ojalá te abrace en esos momentos en los que necesites sentirte acompañada. Ojalá te encuentre sonriendo, cumpliendo sueños y viviendo momentos tan bonitos que te cueste creer que son reales. Ojalá te conceda muchísimos años más para que puedas descubrir todo lo que todavía tiene preparado para ti.</p>
+<p>Y ojalá nunca olvides que no tienes que esperar hasta tu cumpleaños para merecer que te celebren, si es por mí, lo haría todos los días.</p>
+<p>Porque cada día que estás aquí es un día en el que el mundo tiene la suerte de tenerte.</p>
+<p>Y yo tengo la suerte de coincidir contigo, mi amor.<br>Qué suerte que existas, que suerte que seas tú, mi amor.</p>
+<p>Qué suerte poder llamarte mi niña, mi preciosa, mi hermosisísima, mi amor.</p>
+<p>Qué suerte que tu nombre sea Lesly Chanel y que yo haya tenido la oportunidad de conocerte.</p>
+<p>Qué suerte que hace diecinueve años comenzara una historia que, tantos años después, me permitiría escribirte estas palabras.</p>
+<p>Y qué suerte la mía poder decirte, desde lo más sincero de mi corazón, que me hace muy feliz que estés aquí. Qué suerte poder quererte.</p>
+<p>Feliz vida personita que me hace feliz la mía.</p>
+<p>Gracias por existir, mi niña. Gracias por ser tú. Gracias por dejarme celebrar un pedacito de tu historia.</p>
+<p>El 25 se acaba, mi amorcito, pero lo que fuiste hoy no se apaga. Tu cumpleaños terminará, las estrellas dejarán de brillar en esta pantalla y la luna se quedará solita acompañando la noche.</p>
+<p>Pero tú seguirás aquí.<br>Y eso, mi niñita linda, es lo más bonito de todo.</p>
+<p>Todo esto fue tuyo. Cada estrella, cada palabra, cada pequeño detalle. Todo fue pensado para ti, mi niña hermosa.</p>
+<p>Y si pudiera guardar una sola cosa de este día para siempre, creo que guardaría la ilusión de imaginarte leyendo esto, descubriendo cada palabra y sintiéndote aunque fuera un poquito tan especial como mereces sentirte.</p>
+<p>Te quiero muchísimo, mi amor. Muchísimo, mi niña. Muchísimo, mi hermosisísima,, mi Lelysita, mi preciosa.</p>
+<p>Y nunca, nunca olvides lo feliz que me hace que existas.</p>
+<p class="end">Te quiero mi niñita de mi corazón 🤍</p>
+<p class="fin">12:00 am · fin del 25</p>
+<p style="text-align:center"><button class="btn" id="close2">Cerrar la carta</button></p>
+</article>
+</section>
+<section class="start" id="start">
+  <p class="t">11:50 pm</p>
+  <p>El 25 se está acabando.</p>
+  <button class="btn" id="go">Despedir el día</button>
+</section>
+<script>
+var $=function(x){return document.getElementById(x)},N=19,q=matchMedia('(prefers-reduced-motion: reduce)').matches,T=[],st=[];
+var L={0:"Hoy fue tu día.",3:"Diecinueve años de luz.",6:"El universo entero giró en torno a ti.",9:"Hubo canciones, planetas y un trofeo con tu nombre.",12:"Y aun así, nada se compara contigo.",15:"Tu sonrisa fue la estrella más brillante.",18:"Queda una sola luz."};
+var D=[],A=[0],pts=[];
+for(var k=0;k<=720;k++){var t=Math.PI+2*Math.PI*k/720,x=16*Math.pow(Math.sin(t),3),y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+  D.push([50+x*2.7,50-(y+2.4)*2.88]);if(k)A.push(A[k-1]+Math.hypot(D[k][0]-D[k-1][0],(D[k][1]-D[k-1][1])/1.1))}
+for(var i=0,k=0;i<N;i++){var s=A[720]*i/N;while(k<720&&A[k+1]<s)k++;pts.push(D[k])}
+pts.forEach(function(p,i){var e=document.createElement('div');e.className='st';e.style.left=p[0]+'%';e.style.top=p[1]+'%';e.style.setProperty('--k',i);e.innerHTML='<i></i>';$('stage').appendChild(e);st.push(e)});
+function at(f,ms){T.push(setTimeout(f,ms))}
+function clock(k){var m=50+Math.floor(k/N*10);$('clk').textContent=m>=60?'12:00 am':'11:'+m+' pm';$('clk').classList.toggle('late',m>=57)}
+function run(){
+  T.forEach(clearTimeout);T=[];
+  document.body.classList.remove('fin','beat');$('again').classList.remove('on');$('ln').style.opacity=1;$('ln').textContent='';
+  $('open').classList.remove('on');
+  st.forEach(function(e){e.className='st'});$('clk').textContent='11:50 pm';$('clk').classList.remove('late');
+  var gap=q?300:1800,base=900;
+  st.forEach(function(e,k){
+    var t0=base+k*gap;
+    at(function(){if(L[k]!==undefined){$('ln').style.opacity=0;setTimeout(function(){$('ln').textContent=L[k];$('ln').style.opacity=1},600)}},t0-700);
+    at(function(){e.classList.add('fl');clock(k+1);document.querySelector('.moon').style.filter='drop-shadow(0 0 '+(14+k*2.4)+'px rgba(200,220,255,'+(.55+k*.02)+'))';if(navigator.vibrate)navigator.vibrate(k===N-1?[60,80,160]:25)},t0);
+    at(function(){e.classList.remove('fl');e.classList.add('off')},t0+500);
+  });
+  var end=base+N*gap+1400;
+  at(function(){$('ln').style.opacity=0},end-600);
+  at(function(){document.body.classList.add('fin')},end);
+  at(function(){document.body.classList.add('beat');$('open').classList.add('on')},end+4200);
+  at(function(){$('again').classList.add('on')},end+6500);
+}
+$('go').onclick=function(){$('start').classList.add('gone');run()};
+$('again').onclick=run;
+$('open').onclick=function(){$('letter').hidden=false;$('letter').scrollTop=0};
+$('close').onclick=$('close2').onclick=function(){$('letter').hidden=true};
+(function(){
+  var c=$('bg'),g=c.getContext('2d'),W,H,d=Math.min(window.devicePixelRatio||1,2),P=[];
+  function size(){W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;g.setTransform(d,0,0,d,0,0);P=[];
+    for(var i=0;i<Math.round(W*H/4200);i++)P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+.25,p:Math.random()*6.3,s:Math.random()*1.4+.3})}
+  function draw(t){g.clearRect(0,0,W,H);
+    for(var i=0;i<P.length;i++){var s=P[i],a=q?.7:.3+.7*(.5+.5*Math.sin(t/1000*s.s+s.p));g.fillStyle='rgba(235,242,255,'+a+')';g.beginPath();g.arc(s.x,s.y,s.r,0,6.283);g.fill()}
+    if(!q)requestAnimationFrame(draw)}
+  size();addEventListener('resize',function(){size();if(q)draw(0)});requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
